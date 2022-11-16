@@ -1428,8 +1428,8 @@ class Exploration(translation_domain.BaseTranslatableObject):
         current_state_schema = feconf.CURRENT_STATE_SCHEMA_VERSION
         current_schema_version = feconf.CURRENT_EXPLORATION_SCHEMA_VERSION
         auto_tts_enabled = feconf.DEFAULT_AUTO_TTS_ENABLED
-        correctness_feedback_enabled = \
-            feconf.DEFAULT_CORRECTNESS_FEEDBACK_ENABLED
+        correctness_feedback_enabled = (
+            feconf.DEFAULT_CORRECTNESS_FEEDBACK_ENABLED)
 
         return cls(
             exploration_id, title, category, objective, language_code, [], '',
