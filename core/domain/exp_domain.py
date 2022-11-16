@@ -1404,8 +1404,7 @@ class Exploration(translation_domain.BaseTranslatableObject):
         taken from feconf; 'tags' and 'param_changes_list' are initialized to
         empty list; 'states_schema_version' is taken from feconf; 'states_dict'
         is derived from feconf; 'param_specs_dict' is an empty dict; 'blurb' and
-        'author_notes' are initialized to empty string; 'version' is
-        initializated to 0.
+        'author_notes' are initialized to empty string; 'version' is taken from feconf.
 
         Args:
             exploration_id: str. The id of the exploration.
@@ -1425,13 +1424,16 @@ class Exploration(translation_domain.BaseTranslatableObject):
         states_dict = {
             init_state_name: init_state_dict
         }
+        current_state_schema = feconf.CURRENT_STATE_SCHEMA_VERSION
+        current_schema_version = feconf.CURRENT_EXPLORATION_SCHEMA_VERSION
+        auto_tts_enabled = feconf.DEFAULT_AUTO_TTS_ENABLED
+        correctness_feedback_enabled = feconf.DEFAULT_CORRECTNESS_FEEDBACK_ENABLED
 
         return cls(
             exploration_id, title, category, objective, language_code, [], '',
-            '', feconf.CURRENT_STATE_SCHEMA_VERSION,
-            init_state_name, states_dict, {}, [], 0,
-            feconf.DEFAULT_AUTO_TTS_ENABLED,
-            feconf.DEFAULT_CORRECTNESS_FEEDBACK_ENABLED, True)
+            '', current_state_schema,
+            init_state_name, states_dict, {}, [], current_schema_version,
+            auto_tts_enabled, correctness_feedback_enabled, True)
 
     @classmethod
     def from_dict(
