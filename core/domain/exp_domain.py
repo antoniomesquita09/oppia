@@ -1404,7 +1404,8 @@ class Exploration(translation_domain.BaseTranslatableObject):
         taken from feconf; 'tags' and 'param_changes_list' are initialized to
         empty list; 'states_schema_version' is taken from feconf; 'states_dict'
         is derived from feconf; 'param_specs_dict' is an empty dict; 'blurb' and
-        'author_notes' are initialized to empty string; 'version' is taken from feconf.
+        'author_notes' are initialized to empty string; 'version' is taken from
+        feconf.
 
         Args:
             exploration_id: str. The id of the exploration.
@@ -1427,7 +1428,8 @@ class Exploration(translation_domain.BaseTranslatableObject):
         current_state_schema = feconf.CURRENT_STATE_SCHEMA_VERSION
         current_schema_version = feconf.CURRENT_EXPLORATION_SCHEMA_VERSION
         auto_tts_enabled = feconf.DEFAULT_AUTO_TTS_ENABLED
-        correctness_feedback_enabled = feconf.DEFAULT_CORRECTNESS_FEEDBACK_ENABLED
+        correctness_feedback_enabled = \
+            feconf.DEFAULT_CORRECTNESS_FEEDBACK_ENABLED
 
         return cls(
             exploration_id, title, category, objective, language_code, [], '',
