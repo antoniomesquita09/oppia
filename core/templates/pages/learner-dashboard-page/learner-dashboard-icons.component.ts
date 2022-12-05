@@ -45,6 +45,7 @@ export class LearnerDashboardIconsComponent implements OnInit, OnChanges {
   learnerDashboardActivityIds!: LearnerDashboardActivityIds;
   activityIsCurrentlyHoveredOver: boolean = true;
   playlistTooltipIsEnabled: boolean = false;
+  keyUpDisabled: boolean = false
   @Input()
   get activityActive(): boolean {
     return this.activityIsCurrentlyHoveredOver;
@@ -87,6 +88,11 @@ export class LearnerDashboardIconsComponent implements OnInit, OnChanges {
 
   setHoverState(hoverState: boolean): void {
     this.activityIsCurrentlyHoveredOver = hoverState;
+  }
+
+  alreadyAddedToLearnerPlaylist(activityId: string): boolean {
+    return !this.learnerDashboardActivityIds?.includesActivity(
+        activityId);
   }
 
   canActivityBeAddedToLearnerPlaylist(activityId: string): boolean {
@@ -211,7 +217,14 @@ export class LearnerDashboardIconsComponent implements OnInit, OnChanges {
       // Note to developers:
       // This callback is triggered when the Cancel button is clicked.
       // No further action is needed.
+
+      // Prevent modal cancel button re-open modal when pressing 'enter' key on keyboard
+      this.keyUpDisabled = true
     });
+  }
+
+  enableKeyUp(): void {
+    this.keyUpDisabled = false
   }
 }
 
