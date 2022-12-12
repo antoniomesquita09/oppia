@@ -55,7 +55,7 @@
               <span>Displaying {{ pageNumber * itemsPerPage + 1 }} - {{ getUpperLimitValueForPagination() }} of {{ currentCount }}</span>
             </div>
             <div class="dashboard-list-header-count" *ngIf="activeTab === TAB_NAME_SKILLS">
-              <span>Displaying {{ pageNumber * itemsPerPage + 1 }} - {{ getUpperLimitValueForPagination() }} of {{ getTotalCountValueForSkills() }}</span>
+              <span>Displaying {{ pageNumber * itemsPerPage + 1 }} - {{ getUpperLimitValueForPagination() }} of {{ totalSkillCount }}</span>
             </div>
             <div class="dashboard-list-pagination">
               <div>
@@ -79,10 +79,14 @@
               </div>
               <div *ngIf="activeTab === TAB_NAME_SKILLS">
                 <i class="fa fa-angle-left topic-pagination-arrow" (click)="navigateSkillPage(MOVE_TO_PREV_PAGE)"></i>
-                <span class="dashboard-list-pagination-value">
-                  <span class="dashboard-list-pagination-active">{{ skillPageNumber + 1 }}</span>
-                </span>
-                <i class="fa fa-angle-right topic-pagination-arrow" (click)="navigateSkillPage(MOVE_TO_NEXT_PAGE)"></i>
+                  <span class="dashboard-list-pagination-value"
+                        *ngFor=" let n of generateNumbersTillRange(totalSkillCount/itemsPerPage); index as idx" (click)="goToSkillPageNumber(idx)">
+                    <span *ngIf="pageNumber === idx" class="dashboard-list-pagination-active">
+                      <span>{{ idx + 1 }}</span>
+                    </span>
+                    <span *ngIf="pageNumber !== idx">{{ idx + 1 }}</span>
+                  </span>
+                <i class="fa fa-angle-right topic-pagination-arrow" (click)="goToNextSkillPage()"></i>
               </div>
             </div>
           </div>

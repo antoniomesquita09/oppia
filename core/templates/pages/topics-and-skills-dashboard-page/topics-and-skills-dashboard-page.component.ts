@@ -87,6 +87,7 @@ export class TopicsAndSkillsDashboardPageComponent {
   displayedTopicSummaries: CreatorTopicSummary[] = [];
   displayedSkillSummaries: SkillSummary[] = [];
   skillStatusOptions: string[] = [];
+  totalSkillPage: number = 0
 
   constructor(
     private focusManagerService: FocusManagerService,
@@ -212,6 +213,7 @@ export class TopicsAndSkillsDashboardPageComponent {
     } else if (this.activeTab === this.TAB_NAME_SKILLS) {
       this.skillPageNumber = pageNumber;
       this.pageNumber = this.skillPageNumber;
+      this.totalSkillPage = this.totalSkillCount/this.itemsPerPage;
       this.displayedSkillSummaries = this.skillSummaries.slice(
         pageNumber * this.itemsPerPage,
         (pageNumber + 1) * this.itemsPerPage);
@@ -231,13 +233,8 @@ export class TopicsAndSkillsDashboardPageComponent {
             if (this.firstTimeFetchingSkills) {
               this.goToPageNumber(0);
               this.firstTimeFetchingSkills = false;
-            } else {
-              this.goToPageNumber(this.pageNumber + 1);
             }
           });
-    } else if (this.skillSummaries.length >
-            ((this.skillPageNumber + 1) * this.itemsPerPage)) {
-      this.goToPageNumber(this.pageNumber + 1);
     }
   }
 
@@ -251,6 +248,17 @@ export class TopicsAndSkillsDashboardPageComponent {
     } else if (this.pageNumber >= 1) {
       this.goToPageNumber(this.pageNumber - 1);
     }
+  }
+
+  goToNextSkillPage(): void {
+    if (this.totalSkillPage < this.pageNumber +1) return;
+    this.goToPageNumber(this.pageNumber + 1);
+    this.fetchSkillsDebounced();
+  }
+
+  goToSkillPageNumber(num: Number): void {
+      this.goToPageNumber(num);
+      this.fetchSkillsDebounced();
   }
 
   /**
@@ -344,6 +352,7 @@ export class TopicsAndSkillsDashboardPageComponent {
         this.untriagedSkillSummaries = response.untriagedSkillSummaries;
         this.totalUntriagedSkillSummaries = this.untriagedSkillSummaries;
         this.mergeableSkillSummaries = response.mergeableSkillSummaries;
+        this.totalSkillPage = response.totalSkillCount/this.itemsPerPage;
 
         if (!stayInSameTab || !this.activeTab) {
           this.activeTab = this.TAB_NAME_TOPICS;
